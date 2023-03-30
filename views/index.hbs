@@ -1,0 +1,47 @@
+<h1>Quản lý sản phẩm</h1>
+<br>
+<form action="/" method="POST">
+    <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="name" placeholder="Nhập tên sản phẩm" required>
+    </div>
+    <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Giá</label>
+        <input type="number" class="form-control" id="formGroupExampleInput2" name="price"
+            placeholder="Nhập giá sản phẩm" required min="0" step="any">
+        <label for="formGroupExampleInput2" class="form-label">Sô lượng</label>
+        <input type="number" class="form-control" id="formGroupExampleInput2" name="quantity"
+            placeholder="Nhập số lượng" min="1" required >
+    </div>
+    <button type="submit" class="btn btn-primary">Thêm</button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Giá</th>
+            <th scope="col">Số lượng</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this._id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.quantity}}</td>
+            <td>
+                <form action="/homeDelete" method="POST">
+                    <button class="btn btn-danger" name="idDelete" value={{this._id}}>Xóa</button>
+                </form>
+            </td>
+            <td>
+                <form action="/homeUpdateInfor" method="POST">
+                    <button class="btn btn-success" name="idUpdate" value={{this._id}}>Sửa</button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

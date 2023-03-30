@@ -1,0 +1,17 @@
+<h1>Sửa</h1>
+<br>
+<form action="/home" method="POST">
+    <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" name="name" placeholder="Nhập tên sản phẩm" value={{nameEd}} >
+    </div>
+    <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Giá</label>
+        <input type="number" class="form-control" id="formGroupExampleInput2" name="price" placeholder="Nhập giá sản phẩm" value={{priceEd}} required min="0" step="any">
+    </div>
+    <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Sô lượng</label>
+        <input type="number" class="form-control" id="formGroupExampleInput2" name="quantity" placeholder="Nhập số lượng" value={{ quantityEd}} min="1" required>
+    </div>
+    <button type="submit" class="btn btn-primary" name="edit" value={{idEdit}}>Sửa</button>
+</form>
