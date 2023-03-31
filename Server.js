@@ -3,12 +3,14 @@ const express = require('express');
 const express_handlebars = require('express-handlebars');
 const mongoose = require('mongoose');
 const product = require('./Product');
+const e = require('express');
 const app = express();
 const uri ="mongodb+srv://user:o9NABjohhcAFTZti@cluster0.rwudpjs.mongodb.net/userManager?retryWrites=true&w=majority";
 
-app.listen(4000,()=>{
+app.listen(3030,()=>{
     console.log("Server đang chạy");
 })
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -22,9 +24,15 @@ app.get('/', async (req, res) => {
     console.log("Thành Công");
 
     let list = await product.find().lean();
+    let i =1;
     res.render('index', {
         layout: 'main',
         data : list,
+        helper:{
+            foo(){
+                return String(i++);
+            }
+        }
     });
 });
 
@@ -51,17 +59,19 @@ app.post('/', async (req, res) => {
 });
 
 app.post('/homeDelete', async (req, res) => {
-    await mongoose.connect(uri);
-    console.log("Thành Công");
+   
+  
     let id = req.body.idDelete;
- 
-    await product.deleteOne({_id:id});
-
-    let list = await product.find().lean();
-    res.render('index', {
-        layout: 'main',
-        data : list,
-    });
+    
+    try {
+        await mongoose.connect(uri);
+        console.log(id);
+        console.log("Thành Công");
+        await product.deleteOne({_id:id});
+        res.redirect("/");
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 app.post('/homeUpdateInfor', async (req, res) => {
@@ -96,9 +106,6 @@ app.post('/home', async (req, res) => {
 
     await editProduct.updateOne({name:name,price:price,quantity:quantity});
 
-    let list = await product.find().lean();
-    res.render('index', {
-        layout: 'main',
-        data : list,
-    });
+
+    res.redirect("/");
 });
